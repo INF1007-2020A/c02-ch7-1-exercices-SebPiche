@@ -4,14 +4,80 @@
 from collections import deque
 
 
-def get_fibonacci_number(TODO):
-	pass
+def get_fibonacci_number(index):
+	# Retourner les deux premiers elements pas definis recursivement
+	# if index ==0:
+	# 	return 0
+	# elif index == 1:
+	# 	return 1
+	# else:
+	# 	#F(i) = F(i-1) + F(i-2)
+	# 	return get_fibonacci_number(index - 1) + get_fibonacci_number(index - 2)
 
-def get_fibonacci_sequence(TODO):
-	pass
+	# if i ==0:
+	# 	return a
+	# else:
+	# 	if i ==1:
+	# 		return b
+	# 	else:
+	# 		return c
+	return (
+			0 if index == 0
+			else 1 if index == 1 else
+			get_fibonacci_number(index - 1) + get_fibonacci_number(index - 2)
+			)
 
-def get_sorted_dict_by_decimals(TODO):
-	pass
+def get_fibonacci_sequence(length, seq=[0,1]):
+	# batir avec les deux premiers elements pas definis recursivement
+	# batir recursivement le reste
+	# if length == 1:
+	# 	return seq[0:1]
+	# elif length == 2:
+	# 	return seq[:2]
+	# elif len(seq) < length:
+	# 	return get_fibonacci_sequence(length, seq + [seq[-1] + seq[-2]])
+	# else:
+	# 	return seq
+	#
+	return (
+		seq[0:length] if length <= 2 else
+		get_fibonacci_sequence(length, seq + [seq[-1] + seq[-2]]) if len (seq) < length else
+		seq
+		)
+
+def get_sorted_dict_by_decimals(dict_arg):
+	def decimal_part(n):
+		return n % 1.0
+	return dict(sorted(dict_arg.items(), key=lambda t: t[1] % 1.0))
+
+def fibonacci_numbers(length):
+	INIT_VALUES = [0, 1]
+
+	for i, elem in enumerate(INIT_VALUES):
+		if i >= length:
+			break
+		yield elem
+	last_elems = deque(INIT_VALUES)
+	for i in range(len(INIT_VALUES), length):
+		fibo_number = last_elems[-1] + last_elems[-2]
+		last_elems.append(fibo_number)
+		last_elems.popleft()
+		yield fibo_number
+
+	# yield INIT_VALUES[0]
+	# yield 0
+	# if length >= 2:
+	# 	yield 1
+	# last_elems = deque(INIT_VALUES)
+	# if length > 2:
+	# 	for i in range(2, length):
+	# 		fibo_number = last_elems[-1] + last_elems[-2]
+	# 		last_elems.append(fibo_number)
+	# 		last_elems.popleft()
+	# 		yield fibo_number
+
+	# for i in range(length):
+	# 	yield
 
 def build_recursive_sequence_generator(TODO):
 	pass
@@ -19,12 +85,12 @@ def build_recursive_sequence_generator(TODO):
 if __name__ == "__main__":
 	print([get_fibonacci_number(0), get_fibonacci_number(1), get_fibonacci_number(2)])
 	print([get_fibonacci_number(i) for i in range(10)])
-	print()
+	print("-" * 40)
 
 	print(get_fibonacci_sequence(1))
 	print(get_fibonacci_sequence(2))
 	print(get_fibonacci_sequence(10))
-	print()
+	print("-" * 40)
 
 	spam = {
 		2: 2.1,
@@ -40,22 +106,22 @@ if __name__ == "__main__":
 	}
 	print(get_sorted_dict_by_decimals(spam))
 	print(get_sorted_dict_by_decimals(eggs))
-	print()
+	print("-----Geenerator-----" + "-" * 30)
 
 	for fibo_num in fibonacci_numbers(10):
 		print(fibo_num, end=" ")
 	print("\n")
 
-	def fibo_def(last_elems):
-		return last_elems[-1] + last_elems[-2]
-	fibo = build_recursive_sequence_generator([0, 1], fibo_def)
-	for fi in fibo(10):
-		print(fi, end=" ")
-	print("\n")
+	# def fibo_def(last_elems):
+	# 	return last_elems[-1] + last_elems[-2]
+	# fibo = build_recursive_sequence_generator([0, 1], fibo_def)
+	# for fi in fibo(10):
+	# 	print(fi, end=" ")
+	# print("\n")
 
-	lucas = build_recursive_sequence_generator(TODO)
-	print(f"Lucas : {[elem for elem in lucas(10)]}")
-	perrin = build_recursive_sequence_generator(TODO)
-	print(f"Perrin : {[elem for elem in perrin(10)]}")
-	hofstadter_q = build_recursive_sequence_generator(TODO)
-	print(f"Hofstadter-Q : {[elem for elem in hofstadter_q(10)]}")
+	# lucas = build_recursive_sequence_generator(TODO)
+	# print(f"Lucas : {[elem for elem in lucas(10)]}")
+	# perrin = build_recursive_sequence_generator(TODO)
+	# print(f"Perrin : {[elem for elem in perrin(10)]}")
+	# hofstadter_q = build_recursive_sequence_generator(TODO)
+	# print(f"Hofstadter-Q : {[elem for elem in hofstadter_q(10)]}")
